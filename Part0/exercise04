@@ -1,0 +1,26 @@
+@startuml
+    participant browser
+    participant server
+    actor User
+
+    User->>browser: Type note in text field
+    User->>browser: Click "Save" button
+    Note over User,browser: The user enters new note and saves it.
+
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note with note data
+    activate server
+    server-->>browser: HTTP 302 Redirect to /exampleapp/notes
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
+    activate server
+    server-->>browser: HTML document
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    server-->>browser: Updated notes list
+    deactivate server
+
+    Note right of browser: The browser re-renders the updated notes. 
+@enduml
